@@ -61,15 +61,18 @@ if (firebaseReady()) {
             isOnline = true;
             document.getElementById('loginScreen').classList.add('hidden');
             updateSyncUI();
-            loadFromCloud();
+            loadFromCloud().then(() => {
+                renderDashboard();
+            });
         } else {
             currentUser = null;
             isOnline = false;
             updateSyncUI();
+            // Giriş yapılmamış, login ekranını göster
+            document.getElementById('loginScreen').classList.remove('hidden');
         }
     });
 } else {
-    // Firebase yoksa direkt uygulamayı göster
     document.getElementById('loginScreen').classList.add('hidden');
 }
 
@@ -109,15 +112,17 @@ async function saveToCloud() {
 
     try {
         await doc.set({
-            events: state.events,
-            tasks: state.tasks,
-            journal: state.journal,
-            settings: state.settings,
+            events: JSON.parse(JSON.stringify(state.events)),
+            tasks: JSON.parse(JSON.stringify(state.tasks)),
+            journal: JSON.parse(JSON.stringify(state.journal)),
+            settings: JSON.parse(JSON.stringify(state.settings)),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
         dot.className = 'sync-dot';
+        document.getElementById('syncText').textContent = 'Senkronize';
     } catch (err) {
         dot.className = 'sync-dot offline';
+        document.getElementById('syncText').textContent = 'Hata!';
         console.error('Sync error:', err);
     }
 }
@@ -151,15 +156,9 @@ async function loadFromCloud() {
 }
 
 // ========== OVERRIDE SAVE ==========
-// app.js yüklendikten sonra save() fonksiyonunu override edecek
-const _origSaveSetup = setInterval(() => {
-    if (typeof save === 'function' && !save._patched) {
-        const originalSave = save;
-        window.save = function() {
-            originalSave();
-            if (isOnline) saveToCloud();
-        };
-        window.save._patched = true;
-        clearInterval(_origSaveSetup);
-    }
-}, 100);
+// app.js zaten yüklendi, save() fonksiyonunu override et
+const _originalSave = save;
+save = function() {
+    _originalSave();
+    if (isOnline) saveToCloud();
+};
