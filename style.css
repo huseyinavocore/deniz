@@ -1579,3 +1579,98 @@ body {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* ========== LOGIN SCREEN ========== */
+.login-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-sidebar);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.login-screen.hidden { display: none; }
+
+.login-card {
+    text-align: center;
+    color: white;
+}
+
+.login-logo {
+    font-size: 48px;
+    color: var(--accent-light);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.login-card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    margin-bottom: 4px;
+}
+
+.login-card p {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+}
+
+.login-btn {
+    width: 220px;
+    padding: 14px 24px;
+    font-size: 15px;
+}
+
+/* Sync indicator */
+.sync-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    padding: 8px 24px;
+}
+
+.sync-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2ecc71;
+}
+.sync-dot.offline { background: #e74c3c; }
+.sync-dot.syncing { background: #f39c12; animation: pulse 1s infinite; }
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    font-size: 11px;
+    padding: 4px 24px 12px;
+    transition: color 0.2s;
+}
+.logout-btn:hover { color: white; }

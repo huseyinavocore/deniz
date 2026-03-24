@@ -9,6 +9,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <span class="login-logo">✦</span>
+            <h1>Deniz</h1>
+            <p>Hayat Planlayıcı</p>
+            <button class="btn btn-primary login-btn" id="googleLoginBtn" onclick="loginWithGoogle()">
+                Google ile Giriş Yap
+            </button>
+            <button class="btn btn-ghost login-btn" onclick="useOffline()" style="margin-top:8px;">
+                Çevrimdışı Kullan
+            </button>
+        </div>
+    </div>
+
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -50,6 +65,15 @@
         </ul>
         <div class="sidebar-footer">
             <div class="motivational-quote" id="dailyQuote"></div>
+            <div class="sync-status" id="syncStatus">
+                <span class="sync-dot" id="syncDot"></span>
+                <span id="syncText">Çevrimdışı</span>
+            </div>
+            <div class="user-info" id="userInfo" style="display:none;">
+                <img class="user-avatar" id="userAvatar" src="" alt="">
+                <span id="userName"></span>
+            </div>
+            <button class="logout-btn" id="logoutBtn" style="display:none;" onclick="logoutUser()">Çıkış Yap</button>
         </div>
     </nav>
 
@@ -459,6 +483,11 @@
     <!-- Mobile menu toggle -->
     <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-sync.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
